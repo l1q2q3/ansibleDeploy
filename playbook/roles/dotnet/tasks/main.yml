@@ -1,0 +1,13 @@
+- name: install dotNetCore step1
+  shell: rpm --import https://packages.microsoft.com/keys/microsoft.asc
+
+- name: install dotNetCore step2
+  template: src=dotnetdev.repo dest=/etc/yum.repos.d/dotnetdev.repo owner=root group=root mode=0644
+
+- name: install dotNetCore step3
+  yum: name={{ item }} state=latest
+  with_items:
+    - [ 'libunwind','libicu' ]
+
+- name: install dotNetCore step4
+  yum: name=dotnet-sdk-2.1.101 state=latest

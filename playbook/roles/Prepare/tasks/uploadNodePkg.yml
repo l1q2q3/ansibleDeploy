@@ -1,0 +1,5 @@
+- name: cp package to node
+  copy: src={{package_path}}/{{project_name}}-{{node_name}}-{{version}}.tar.gz dest={{install_root_path}}/ owner={{ssh_user}} group={{ssh_group}} mode=0640
+
+- name: untar package
+  shell: tar -zxf {{install_root_path}}/{{project_name}}-{{node_name}}-{{version}}.tar.gz -C {{install_root_path}}/

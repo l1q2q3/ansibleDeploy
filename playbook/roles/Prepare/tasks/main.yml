@@ -1,0 +1,7 @@
+- name: upload node package
+  tags:
+    - all_install
+    - all_uninstall
+    - all_upgrade
+    - all_rollback
+  include: uploadNodePkg.yml

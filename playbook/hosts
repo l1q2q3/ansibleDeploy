@@ -1,0 +1,62 @@
+#[db]
+#IDCM-DB01 ansible_ssh_host=192.168.10.11 ansible_ssh_user=root
+#IDCM-DB02 ansible_ssh_host=192.168.10.12 ansible_ssh_user=root
+
+#[nginx]
+#IDCM-Nginx01 ansible_ssh_host=192.168.10.21 ansible_ssh_user=root
+#IDCM-Nginx02 ansible_ssh_host=192.168.10.22 ansible_ssh_user=root
+#
+#[redis]
+#IDCM-AD-Redis01 ansible_ssh_host=192.168.10.70 ansible_ssh_user=root
+#IDCM-AD-Redis02 ansible_ssh_host=192.168.10.71 ansible_ssh_user=root
+#IDCM-C2CTD-Redis01 ansible_ssh_host=192.168.10.72 ansible_ssh_user=root
+#IDCM-ASD-Redis01 ansible_ssh_host=192.168.10.80 ansible_ssh_user=root
+#IDCM-ASD-Redis02 ansible_ssh_host=192.168.10.81 ansible_ssh_user=root
+#IDCM-TD-Redis01 ansible_ssh_host=192.168.10.82 ansible_ssh_user=root
+#IDCM-Cache-Redis01 ansible_ssh_host=192.168.10.77 ansible_ssh_user=root
+#
+#[rabbitmq]
+#IDCM-MQ01 ansible_ssh_host=192.168.10.20 ansible_ssh_user=root
+#IDCM-MQ02 ansible_ssh_host=192.168.10.60 ansible_ssh_user=root
+#
+#
+#[kafka]
+#IDCM-MQ01 ansible_ssh_host=192.168.10.60 ansible_ssh_user=root
+#IDCM-MQ02 ansible_ssh_host=192.168.10.61 ansible_ssh_user=root
+#IDCM-MQ03 ansible_ssh_host=192.168.10.62 ansible_ssh_user=root
+
+[webapi]
+IDCM-WebAPI01 ansible_ssh_host=192.168.10.30 ansible_ssh_user=root
+IDCM-WebAPI02 ansible_ssh_host=192.168.10.31 ansible_ssh_user=root
+
+[c2capi]
+IDCM-C2CAPI01 ansible_ssh_host=192.168.10.40 ansible_ssh_user=root
+IDCM-C2CAPI02 ansible_ssh_host=192.168.10.41 ansible_ssh_user=root
+
+[scheduler]
+IDCM-Scheduler01 ansible_ssh_host=192.168.10.50 ansible_ssh_user=root
+
+[c2cscheduler]
+IDCM-Scheduler01 ansible_ssh_host=192.168.10.50 ansible_ssh_user=root
+
+[adminsite]
+IDCM-AdminSite01 ansible_ssh_host=192.168.10.54 ansible_ssh_user=root
+
+[syncdata]
+IDCM-SyncData01 ansible_ssh_host=192.168.10.52 ansible_ssh_user=root
+
+[maintain]
+IDCM-maintain ansible_ssh_host=192.168.10.54 ansible_ssh_user=root
+
+[websocketapi]
+IDCM-websocketapi ansible_ssh_host=192.168.10.16 ansible_ssh_user=root
+
+[mytoken]
+IDCM-mytoken ansible_ssh_host=192.168.10.4 ansible_ssh_user=root
+
+[match_engine]
+IDCM-Match01 ansible_ssh_host=192.168.10.90 ansible_ssh_user=root
+IDCM-Match02 ansible_ssh_host=192.168.10.91 ansible_ssh_user=root
+IDCM-Match03 ansible_ssh_host=192.168.10.92 ansible_ssh_user=root
+IDCM-Match04 ansible_ssh_host=192.168.10.93 ansible_ssh_user=root
+IDCM-Match05 ansible_ssh_host=192.168.10.94 ansible_ssh_user=root

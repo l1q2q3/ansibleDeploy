@@ -1,0 +1,37 @@
+- name: cp {{node_name}} package to node
+  copy: src={{package_path}}/Code/{{node_name}}.tar.gz dest={{install_root_path}}/ owner={{ssh_user}} group={{ssh_group}} mode=0640
+
+- name: cp configs to node
+  copy: src={{package_path}}/Code/Configs.tar.gz dest={{install_root_path}}/ owner={{ssh_user}} group={{ssh_group}} mode=0640
+
+- name: untar {{node_name}} package
+  shell: tar -zxf {{install_root_path}}/{{node_name}}.tar.gz -C {{install_root_path}}/
+
+- name: untar config file to {{install_root_path}}/{{node_name}}/
+  shell: tar -zxf {{install_root_path}}/Configs.tar.gz -C {{install_root_path}}/{{node_name}}/
+
+- name: copy Scheduler config file to package
+  copy: src={{package_path}}/Code/Scheduler_Configs/appsettings.json dest={{install_root_path}}/{{node_name}}/Configs/appsettings.json owner={{ssh_user}} group={{ssh_group}} mode=0640
+  when: '"{{node_name}}" == "IDCM.Host.Scheduler"'
+
+- name: copy C2CScheduler config file to package
+  copy: src={{package_path}}/Code/Scheduler_Configs/c2c_appsettings.json dest={{install_root_path}}/{{node_name}}/Configs/appsettings.json owner={{ssh_user}} group={{ssh_group}} mode=0640
+  when: '"{{node_name}}" == "IDCM.Host.C2CScheduler"'
+
+- name: stop {{node_name}} service
+  shell: supervisorctl stop {{node_name}}
+
+- name: backup {{node_name}} old version
+  shell: mv {{node_name}} {{node_name}}.bak.`date +%m%d` chdir={{install_root_path}}/jobs/
+
+- name: install {{node_name}} new version
+  shell: mv {{install_root_path}}/{{node_name}} {{install_root_path}}/jobs/
+
+- name: start {{node_name}} service
+  shell: supervisorctl start {{node_name}}
+
+- name: clean package
+  shell: rm -rf {{install_root_path}}/*.tar.gz
+
+- name: print result
+  debug: msg="{{node_name}} upgrade sucessful"

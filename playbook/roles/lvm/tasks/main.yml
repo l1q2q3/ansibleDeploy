@@ -1,0 +1,20 @@
+- name: install lvm2
+  yum: name=lvm2 state=latest
+
+- name: fdisk disk dev
+  script: ./scripts/fdisk.sh {{pv_dev}}
+
+- name: filesystem | Create pv
+  shell: pvcreate {{pvname}}
+
+- name: filesystem | Create vg
+  lvg:  vg={{vgname}}  pvs={{pvname}}
+
+- name: filesystem | create lv
+  lvol: vg={{vgname}}  lv={{lv1}}  size=100%FREE
+
+- name: filesystem | create fs
+  filesystem: fstype=ext4 dev=/dev/{{vgname }}/{{lv1}}
+
+- name: filesytem | mount dir
+  mount: name={{mount_path}} src=/dev/{{vgname}}/{{lv1}} dump=0 passno=0 fstype=ext4 state=mounted

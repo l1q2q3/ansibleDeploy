@@ -1,0 +1,21 @@
+#CENTOS 7 安装部署zabbix_agent
+- name: send zabbix repo to host
+  copy: src=files/zabbix-release-3.4-1.el7.centos.noarch.rpm dest=/tmp/zabbix-release-3.4-1.el7.centos.noarch.rpm
+
+- name: Yum install zabbix repo
+  shell: rpm -ivh --force /tmp/zabbix-release-3.4-1.el7.centos.noarch.rpm
+
+- name: Yum install zabbix-agent
+  yum: name=zabbix-agent state=latest
+
+- name: copy zabbix_agentd.conf to /etc/zabbix/
+  template: src=zabbix_agentd.conf dest=/etc/zabbix/ owner=root group=root mode=0644
+
+- name: create log dir
+  shell: mkdir -p /data/logs/zabbix
+
+- name: chown log dir
+  shell: chown -R zabbix:zabbix /data/logs/zabbix
+
+- name: Start Zabbix_agent service
+  service: name=zabbix-agent state=restarted enabled=yes

@@ -1,0 +1,25 @@
+[webapi]
+IDCM-WebAPI01 ansible_ssh_host=192.168.10.30 ansible_ssh_user=root
+IDCM-WebAPI02 ansible_ssh_host=192.168.10.31 ansible_ssh_user=root
+
+[c2capi]
+IDCM-C2CAPI01 ansible_ssh_host=192.168.10.40 ansible_ssh_user=root
+IDCM-C2CAPI02 ansible_ssh_host=192.168.10.41 ansible_ssh_user=root
+
+[scheduler]
+IDCM-Scheduler01 ansible_ssh_host=192.168.10.50 ansible_ssh_user=root
+
+[adminsite]
+IDCM-AdminSite01 ansible_ssh_host=192.168.10.54 ansible_ssh_user=root
+
+[syncdata]
+IDCM-SyncData01 ansible_ssh_host=192.168.10.52 ansible_ssh_user=root
+
+[fastdfs]
+IDCM-FastDFS01 ansible_ssh_host=192.168.10.51 ansible_ssh_user=root
+
+[match_engine]
+IDCM-Match01 ansible_ssh_host=192.168.10.90 ansible_ssh_user=root
+IDCM-Match02 ansible_ssh_host=192.168.10.91 ansible_ssh_user=root
+IDCM-Match03 ansible_ssh_host=192.168.10.92 ansible_ssh_user=root
+IDCM-Match04 ansible_ssh_host=192.168.10.93 ansible_ssh_user=root

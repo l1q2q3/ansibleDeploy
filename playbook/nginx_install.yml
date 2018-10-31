@@ -1,0 +1,9 @@
+---
+
+- hosts: nginx
+  remote_user: root
+  gather_facts: True
+  roles:
+   - nginx
+  vars:
+    node_name: nginx

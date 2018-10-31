@@ -1,0 +1,111 @@
+---
+
+- hosts: db
+  remote_user: root
+  gather_facts: True
+  roles:
+   - Prepare
+   - doAction
+  vars:
+    node_name: db
+    is_dotnet: no
+
+- hosts: nginx
+  remote_user: root
+  gather_facts: True
+  roles:
+   - Prepare
+   - doAction
+  vars:
+    node_name: nginx
+    is_dotnet: no
+    
+- hosts: redis
+  remote_user: root
+  gather_facts: True
+  roles:
+   - Prepare
+   - doAction
+  vars:
+    node_name: redis
+    is_dotnet: no
+
+- hosts: rabbitmq
+  remote_user: root
+  gather_facts: True
+  roles:
+   - Prepare
+   - doAction
+  vars:
+    node_name: rabbitmq
+    is_dotnet: no
+
+- hosts: webapi
+  remote_user: root
+  gather_facts: True
+  roles:
+   - Prepare
+   - doAction
+  vars:
+    node_name: webapi
+    is_dotnet: yes
+
+- hosts: c2capi
+  remote_user: root
+  gather_facts: True
+  roles:
+   - Prepare
+   - doAction
+  vars:
+    node_name: c2capi
+    is_dotnet: yes
+
+- hosts: scheduler
+  remote_user: root
+  gather_facts: True
+  roles:
+   - Prepare
+   - doAction
+  vars:
+    node_name: scheduler
+    is_dotnet: yes
+
+- hosts: adminsite
+  remote_user: root
+  gather_facts: True
+  roles:
+   - Prepare
+   - doAction
+  vars:
+    node_name: adminsite
+    is_dotnet: yes
+
+- hosts: syncdata
+  remote_user: root
+  gather_facts: True
+  roles:
+   - Prepare
+   - doAction
+  vars:
+    node_name: syncdata
+    is_dotnet: yes
+
+- hosts: fastdfs
+  remote_user: root
+  gather_facts: True
+  roles:
+   - Prepare
+   - doAction
+  vars:
+    node_name: fastdfs
+    is_dotnet: yes
+
+- hosts: match_engine
+  remote_user: root
+  gather_facts: True
+  roles:
+   - Prepare
+   - doAction
+  vars:
+    node_name: match_engine
+    is_dotnet: yes

@@ -1,0 +1,19 @@
+- name: Install
+  tags:
+    - all_install
+  include: process.yml oper_type=install
+
+- name: Uninstall
+  tags:
+    - all_uninstall
+  include: process.yml oper_type=uninstall
+
+- name: Upgrade
+  tags:
+    - all_upgrade
+  include: process.yml oper_type=upgrade
+
+- name: Rollback
+  tags:
+    - all_rollback
+  include: process.yml oper_type=rollback

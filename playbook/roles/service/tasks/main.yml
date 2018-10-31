@@ -1,0 +1,5 @@
+- name: supervisorctl {{action}} all
+  shell: supervisorctl {{action}} all
+
+- name: print result
+  debug: msg="{{node_name}} {{action}} sucessful"

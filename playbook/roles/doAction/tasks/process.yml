@@ -1,0 +1,11 @@
+- name: get parameters
+  template: src=param.cfg dest={{install_root_path}}/{{project_name}}-{{node_name}}-{{version}}/script/conf/param.cfg
+
+- name: do process
+  shell: bash doprocess.sh chdir={{install_root_path}}/{{project_name}}-{{node_name}}-{{version}}/script/{{oper_type}}
+ 
+- name: clear package
+  shell: rm -rf {{install_root_path}}/{{project_name}}-{{node_name}}-{{version}}*
+
+- name: print result
+  debug: msg="{{oper_type}} {{node_name}} successful!"

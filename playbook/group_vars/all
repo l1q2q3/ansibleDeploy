@@ -1,0 +1,76 @@
+---
+#默认ssh用户、密码
+ssh_user: root
+ssh_group: root
+ssh_password: 'idcm@@)!*'
+
+#软件包默认路径
+package_path: /data/svn
+
+#默认软件包安装路径
+install_root_path: /data/idcm
+
+#默认日志存放路径
+logs_path: /data/logs
+
+#版本号
+version: 2.0.0
+
+#定义项目名称
+project_name: IDCM
+
+#数据盘挂载参数
+mount_path:  "/data"
+pv_dev: "/dev/vdc"
+vgname: "vg01"
+pvname: "/dev/vdc1"
+lv1: "data01"
+
+####Nginx反向代理相关配置参数start###
+#站点域名
+nginx_name:
+  - idcm.io
+  - www.idcm.io
+  - joesbaby.com
+  - sg.resun-china.com.cn
+
+#管理站点
+admin_site:
+  name: admin.idcm.io
+  host: 192.168.10.54
+  port: 62617 
+
+#维护站点
+maintain:
+  name: maintain.idcm.io
+  host: 192.168.10.21
+  port: 8302
+
+#静态站点
+static:
+  name: static.idcm.io
+  host: 192.168.10.21
+
+#WebAPI
+webapi:
+  name: api.idcm.io
+  host:
+    - 192.168.10.30
+    - 192.168.10.31
+  port: 8303
+  ssl_port: 8333
+
+#C2CAPI
+c2capi:
+  name: apic2c.idcm.io
+  host:
+    - 192.168.10.40
+    - 192.168.10.41
+  port: 8304
+
+####Nginx反向代理相关配置参数end###
+
+
+##zabbix监控配置参
+zabbix_server_host: 10.58.21.222
+zabbix_log_path: /data/logs/zabbix

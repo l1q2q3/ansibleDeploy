@@ -1,0 +1,37 @@
+#CENTOS 7 安装部署Nginx
+- name: Installing Nginx.
+  yum: name=nginx state=latest
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "7"
+
+- name: Copy the nginx default configuration file 
+  template: src=nginx.conf dest=/etc/nginx/nginx.conf
+
+- name: Copy the site configuration file admin.conf
+  template: src=conf.d/admin.conf dest=/etc/nginx/conf.d/ owner=root group=root mode=0644
+
+- name: Copy the site configuration file api.conf 
+  template: src=conf.d/api.conf dest=/etc/nginx/conf.d/ owner=root group=root mode=0644
+
+- name: Copy the site configuration file c2c.conf
+  template: src=conf.d/c2c.conf dest=/etc/nginx/conf.d/ owner=root group=root mode=0644
+
+- name: Copy the site configuration file maintain.conf
+  template: src=conf.d/maintain.conf dest=/etc/nginx/conf.d/ owner=root group=root mode=0644
+
+- name: Copy the site configuration file static.conf
+  template: src=conf.d/static.conf dest=/etc/nginx/conf.d/ owner=root group=root mode=0644
+
+- name: Copy the site configuration file upstream.conf
+  template: src=conf.d/upstream.conf dest=/etc/nginx/conf.d/ owner=root group=root mode=0644
+
+- name: Copy the site configuration file web.conf
+  template: src=conf.d/web.conf dest=/etc/nginx/conf.d/ owner=root group=root mode=0644
+
+- name: Copy the site configuration file denyip.conf
+  template: src=conf.d/denyip.conf dest=/etc/nginx/conf.d/ owner=root group=root mode=0644
+
+- name: Copy the site configuration file proxy_parms
+  template: src=proxy_parms dest=/etc/nginx/proxy_parms owner=root group=root mode=0644
+
+- name: Restart the nginx service
+  service: name=nginx state=restarted enabled=yes

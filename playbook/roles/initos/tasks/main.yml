@@ -1,0 +1,122 @@
+#设置DNS
+- name: set DNS
+  lineinfile: dest=/etc/resolv.conf state=present line='{{item}}' 
+  with_items:
+    - "nameserver 8.8.8.8"
+    - "nameserver 8.8.4.4"
+
+#CENTOS 7 安装升级常用软件工具
+- name: Upgrade system, about 10-15 min.
+  yum: name=* state=latest
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "7"
+
+- name: Group install Development tools , about 10 min.
+  yum: name="@Development tools" state=present
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "7"
+
+- name: yum install common file,about 10min.
+  yum: name={{ item }} state=latest
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "7"
+  with_items:
+    - [ 'epel-release']
+    - [ 'net-tools','wget' ]
+    - [ 'dos2unix','unzip','iptables','iptables-services']
+    - [ 'ncurses-devel','libdb-utils','net-snmp'  ]
+    - [ 'sysstat','lrzsz','vim','vim-enhanced','libselinux-python' ]
+    - [ 'lsscsi','redhat-lsb-core','pciutils','parted','smartmontools','dmidecode' ]
+    - [ 'lvm2' ]
+
+- name: yum install supervisor
+  yum: name=supervisor state=latest
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "7"
+
+#添加ssh用户
+- name: add ssh user sysadmin
+  user: name={{ ssh_user }} comment="ssh user" password={{ ssh_password|password_hash('sha512') }} update_password=always 
+- name: add become privileges
+  lineinfile: dest=/etc/sudoers state=present  line='{{item}}' validate='visudo -cf %s'
+  with_items:
+    - "{{ ssh_user }} ALL=(ALL) NOPASSWD: ALL"
+
+#设置历史命令保持记录数
+- name: set Historysize
+  lineinfile: dest=/etc/profile           regexp='{{item.regexp}}' state=present  line='{{item.line}}'
+  with_items:
+    - { regexp: 'HISTSIZE=1000', line: 'HISTSIZE=6000'  }
+- name: set HISTTIMEFORMAT
+  lineinfile: dest=/etc/profile  state=present line='{{item}}'
+  with_items:
+    - export HISTTIMEFORMAT="[%F %T `whoami`]"
+
+#设置账户登录超时退出
+- name: set user login timeout
+  lineinfile: dest=/etc/profile insertafter='^HISTSIZE=' line='TMOUT=600'
+
+#设置主机名
+- name: remove existing hostname
+  lineinfile: dest=/etc/hosts regexp='^{{ansible_ssh_host}}' line="{{ansible_ssh_host}}\t{{inventory_hostname}}" state=absent
+- name: add hostname to /etc/hosts
+  lineinfile: dest=/etc/hosts line='{{ansible_ssh_host}}\t{{inventory_hostname}}'
+- name: set hostname
+  shell: hostnamectl set-hostname {{inventory_hostname}}
+
+#关闭selinux
+- name: disable selinux
+  lineinfile: dest=/etc/selinux/config regexp='^SELINUX=' line="SELINUX=disabled"
+
+#设置文件句柄
+- name: set limits.conf
+  lineinfile: dest=/etc/security/limits.conf state=present line='{{item}}' 
+  with_items:
+    - "*               hard    nofile           1024000"
+    - "*               soft    nofile           1024000"
+    - "*               hard    nproc            102400"
+    - "*               soft    nproc            102400"
+
+#内核优化项
+- name: set sysctl.conf
+  lineinfile: dest=/etc/sysctl.conf state=present line='{{item}}' 
+  with_items:
+    - "net.core.rmem_default = 126976"
+    - "net.core.wmem_default = 126976"
+    - "net.core.wmem_max = 16777216"
+    - "net.core.rmem_max = 16777216"
+    - "net.ipv4.tcp_mem = 4096 87380 16777216"
+    - "net.ipv4.tcp_wmem = 4096 65536 16777216"
+    - "net.ipv4.tcp_rmem = 4096 87380 16777216"
+    - "net.core.netdev_max_backlog = 2500"
+    - "net.core.somaxconn = 262144"
+    - "net.ipv4.tcp_no_metrics_save = 1"
+    - "net.ipv4.tcp_moderate_rcvbuf = 1"
+    - "net.ipv4.tcp_fin_timeout = 5"
+    - "net.ipv4.tcp_keepalive_time = 1800"
+    - "net.ipv4.tcp_syncookies = 1"
+    - "net.ipv4.tcp_sack = 0"
+    - "net.ipv4.tcp_tw_reuse = 1"
+    - "net.ipv4.tcp_tw_recycle = 1"
+    - "net.ipv4.ip_local_port_range = 10250 65000"
+    - "net.ipv4.tcp_max_syn_backlog = 81920"
+    - "net.ipv4.tcp_max_tw_buckets = 1600000"
+    - "net.ipv4.tcp_synack_retries = 2"
+    - "net.ipv4.tcp_syn_retries = 2"
+    - "net.ipv4.tcp_retries2 = 2"
+    - "net.ipv4.tcp_window_scaling = 1"
+    - "net.ipv4.tcp_timestamps = 1"
+    - "vm.dirty_writeback_centisecs = 100"
+    - "vm.dirty_ratio = 10"
+    - "vm.dirty_background_ratio = 5"
+- name: setup sysctl alive
+  shell: "/sbin/sysctl -p"
+
+#设置vim字符颜色
+- name: setup vim color
+  lineinfile: dest=/etc/DIR_COLORS regexp='{{item.regexp}}' state=present line='{{item.line}}'
+  with_items:
+    - { regexp: 'DIR 01;34', line: 'DIR 01;37;44'  }
+- name: setup vimrc
+  lineinfile: dest=/etc/vimrc state=present line='{{item}}'
+  with_items: 
+    - "set paste"
+    - "set nosmartindent"
+    - "hi Comment term=bold cterm=bold ctermfg=4" 
+  ignore_errors: yes

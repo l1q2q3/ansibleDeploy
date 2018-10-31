@@ -1,0 +1,91 @@
+---
+
+- hosts: webapi
+  remote_user: root
+  gather_facts: True
+  roles:
+   - upgrade_flow
+  vars:
+    node_name: "IDCM.WebApiNotServer"
+  serial: 1
+
+- hosts: c2capi
+  remote_user: root
+  gather_facts: True
+  roles:
+   - upgrade_flow
+  vars:
+    node_name: "IDCM.WebApiC2C"
+  serial: 1
+
+- hosts: scheduler
+  remote_user: root
+  gather_facts: True
+  roles:
+   - upgrade_flow
+  vars:
+    node_name: "IDCM.Host.Scheduler"
+  serial: 1
+
+- hosts: c2cscheduler
+  remote_user: root
+  gather_facts: True
+  roles:
+   - upgrade_flow
+  vars:
+    node_name: "IDCM.Host.C2CScheduler"
+  serial: 1
+
+- hosts: adminsite
+  remote_user: root
+  gather_facts: True
+  roles:
+   - upgrade_flow
+  vars:
+    node_name: "IDCM.AdminSite"
+  serial: 1
+
+- hosts: maintain
+  remote_user: root
+  gather_facts: True
+  roles:
+   - upgrade_flow
+  vars:
+    node_name: "IDCM.WebAPIMaintain"
+  serial: 1
+
+- hosts: syncdata
+  remote_user: root
+  gather_facts: True
+  roles:
+   - upgrade_flow
+  vars:
+    node_name: "IDCM.Persistence.SyncData"
+  serial: 1
+
+- hosts: websocketapi
+  remote_user: root
+  gather_facts: True
+  roles:
+   - upgrade_flow
+  vars:
+    node_name: "IDCM.Host.WebSocketAPI"
+  serial: 1
+
+- hosts: mytoken
+  remote_user: root
+  gather_facts: True
+  roles:
+   - upgrade_flow
+  vars:
+    node_name: "IDCM.MyToken"
+  serial: 1
+
+- hosts: match_engine
+  remote_user: root
+  gather_facts: True
+  roles:
+   - upgrade_match
+  vars:
+    node_name: "IDCM.Host.MatchEngine"
+  serial: 1
